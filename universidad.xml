@@ -1,0 +1,470 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!--
+- phpMyAdmin XML Dump
+- version 5.2.1
+- https://www.phpmyadmin.net
+-
+- Servidor: 127.0.0.1
+- Tiempo de generación: 26-04-2024 a las 17:51:49
+- Versión del servidor: 10.4.32-MariaDB
+- Versión de PHP: 8.0.30
+-->
+
+<?xml-stylesheet type="text/xsl" href="Universidad.xsl"?>
+<pma_xml_export version="1.0" xmlns:pma="https://www.phpmyadmin.net/some_doc_url/">
+    <!--
+    - Structure schemas
+    -->
+    <pma:structure_schemas>
+        <pma:database name="universidad" collation="utf8mb4_general_ci" charset="utf8mb4">
+            <pma:table name="administradores">
+                CREATE TABLE `administradores` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `id_usuarios` int(11) NOT NULL,
+                  `funciones` text NOT NULL,
+                  PRIMARY KEY (`id`),
+                  KEY `id_usuarios` (`id_usuarios`),
+                  CONSTRAINT `administradores_ibfk_1` FOREIGN KEY (`id_usuarios`) REFERENCES `usuarios` (`id`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="alumnos">
+                CREATE TABLE `alumnos` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `id_usuarios` int(11) NOT NULL,
+                  `np` varchar(20) NOT NULL,
+                  `nombre_alumno` varchar(30) NOT NULL,
+                  `apellidos` varchar(30) NOT NULL,
+                  `correo_alumno` int(11) NOT NULL,
+                  PRIMARY KEY (`id`),
+                  UNIQUE KEY `np` (`np`),
+                  KEY `id_usuarios` (`id_usuarios`),
+                  KEY `np_2` (`np`),
+                  CONSTRAINT `alumnos_ibfk_1` FOREIGN KEY (`id_usuarios`) REFERENCES `usuarios` (`id`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="canalizaciones">
+                CREATE TABLE `canalizaciones` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `id_material_cableado` int(11) NOT NULL,
+                  `m2` double NOT NULL,
+                  PRIMARY KEY (`id`),
+                  KEY `id_material_cableado` (`id_material_cableado`),
+                  CONSTRAINT `canalizaciones_ibfk_1` FOREIGN KEY (`id_material_cableado`) REFERENCES `material_cableado` (`id`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="edificios">
+                CREATE TABLE `edificios` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `nombre_edificio` varchar(30) NOT NULL,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="equipos">
+                CREATE TABLE `equipos` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `id_planta` int(11) NOT NULL,
+                  `id_redes` int(11) NOT NULL,
+                  `tipo` varchar(20) NOT NULL,
+                  `ubicacion` varchar(30) NOT NULL,
+                  `modelo` varchar(30) NOT NULL,
+                  `so` text NOT NULL,
+                  `marca` text NOT NULL,
+                  `reserva` int(11) NOT NULL,
+                  PRIMARY KEY (`id`),
+                  KEY `id_planta` (`id_planta`),
+                  KEY `id_redes` (`id_redes`),
+                  CONSTRAINT `equipos_ibfk_1` FOREIGN KEY (`id_planta`) REFERENCES `plantas` (`id`),
+                  CONSTRAINT `equipos_ibfk_2` FOREIGN KEY (`id_redes`) REFERENCES `redes` (`id`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="impresora">
+                CREATE TABLE `impresora` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `id_equipo` int(11) NOT NULL,
+                  `tinta` varchar(10) NOT NULL,
+                  PRIMARY KEY (`id`),
+                  KEY `id_equipo` (`id_equipo`),
+                  CONSTRAINT `impresora_ibfk_1` FOREIGN KEY (`id_equipo`) REFERENCES `equipos` (`id`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="material_cableado">
+                CREATE TABLE `material_cableado` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `ubicacion` varchar(30) NOT NULL,
+                  `stock_disponible` varchar(50) NOT NULL,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="pc">
+                CREATE TABLE `pc` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `id_equipo` int(11) NOT NULL,
+                  `raton` varchar(30) NOT NULL,
+                  `teclado` varchar(30) NOT NULL,
+                  `tamaño` double NOT NULL,
+                  PRIMARY KEY (`id`),
+                  KEY `id_equipo` (`id_equipo`),
+                  CONSTRAINT `pc_ibfk_1` FOREIGN KEY (`id_equipo`) REFERENCES `equipos` (`id`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="plantas">
+                CREATE TABLE `plantas` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `id_edificio` int(11) NOT NULL,
+                  `nº_planta` int(11) NOT NULL,
+                  `nº_aula` int(11) NOT NULL,
+                  `tamaño` double NOT NULL,
+                  PRIMARY KEY (`id`),
+                  KEY `id_edificio` (`id_edificio`),
+                  CONSTRAINT `plantas_ibfk_1` FOREIGN KEY (`id_edificio`) REFERENCES `edificios` (`id`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="plantas_material_cableado">
+                CREATE TABLE `plantas_material_cableado` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `id_planta` int(11) NOT NULL,
+                  `id_material_cableado` int(11) NOT NULL,
+                  PRIMARY KEY (`id`),
+                  KEY `id_planta` (`id_planta`,`id_material_cableado`),
+                  KEY `id_material_cableado` (`id_material_cableado`),
+                  CONSTRAINT `plantas_material_cableado_ibfk_1` FOREIGN KEY (`id_material_cableado`) REFERENCES `material_cableado` (`id`),
+                  CONSTRAINT `plantas_material_cableado_ibfk_2` FOREIGN KEY (`id_planta`) REFERENCES `plantas` (`id`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="profesores">
+                CREATE TABLE `profesores` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `id_usuarios` int(11) NOT NULL,
+                  `nº_alumno` int(11) NOT NULL,
+                  `asignaturas` varchar(30) NOT NULL,
+                  PRIMARY KEY (`id`),
+                  KEY `id_usuarios` (`id_usuarios`),
+                  CONSTRAINT `profesores_ibfk_1` FOREIGN KEY (`id_usuarios`) REFERENCES `usuarios` (`id`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="racks">
+                CREATE TABLE `racks` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `id_material_cableado` int(11) NOT NULL,
+                  `tamaño_rack` double NOT NULL,
+                  `modelo` varchar(50) NOT NULL,
+                  `marca` text NOT NULL,
+                  PRIMARY KEY (`id`),
+                  KEY `id_material_cableado` (`id_material_cableado`),
+                  CONSTRAINT `racks_ibfk_1` FOREIGN KEY (`id_material_cableado`) REFERENCES `material_cableado` (`id`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="redes">
+                CREATE TABLE `redes` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `nombre_red` varchar(50) NOT NULL,
+                  `descripcion` text NOT NULL,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="redes_usuarios">
+                CREATE TABLE `redes_usuarios` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `id_redes` int(11) NOT NULL,
+                  `id_usuarios` int(11) NOT NULL,
+                  PRIMARY KEY (`id`),
+                  KEY `id_redes` (`id_redes`,`id_usuarios`),
+                  KEY `id_usuarios` (`id_usuarios`),
+                  CONSTRAINT `redes_usuarios_ibfk_1` FOREIGN KEY (`id_redes`) REFERENCES `redes` (`id`),
+                  CONSTRAINT `redes_usuarios_ibfk_2` FOREIGN KEY (`id_usuarios`) REFERENCES `usuarios` (`id`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:view name="red_usuario">
+                CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `universidad`.`red_usuario` AS select `r`.`id` AS `id`,`r`.`nombre_red` AS `nombre_red`,count(`u`.`nº_usuario`) AS `nº_usuarios` from ((`universidad`.`redes` `r` join `universidad`.`redes_usuarios` `ru` on(`r`.`id` = `ru`.`id_redes`)) join `universidad`.`usuarios` `u` on(`u`.`id` = `ru`.`id_usuarios`)) group by `r`.`id`;
+            </pma:view>
+            <pma:view name="red_usuarios">
+                CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `universidad`.`red_usuarios` AS select `r`.`id` AS `id`,`r`.`nombre_red` AS `nombre_red`,count(`u`.`nº_usuario`) AS `nº_usuarios`,count(`al`.`id`) AS `total_añumnos`,count(`ad`.`id`) AS `total_admin`,count(`p`.`id`) AS `total_profesores` from (((((`universidad`.`redes` `r` join `universidad`.`redes_usuarios` `ru` on(`r`.`id` = `ru`.`id_redes`)) join `universidad`.`usuarios` `u` on(`u`.`id` = `ru`.`id_usuarios`)) left join `universidad`.`alumnos` `al` on(`u`.`id` = `al`.`id_usuarios`)) left join `universidad`.`administradores` `ad` on(`u`.`id` = `ad`.`id_usuarios`)) left join `universidad`.`profesores` `p` on(`u`.`id` = `p`.`id_usuarios`)) group by `r`.`id`;
+            </pma:view>
+            <pma:table name="roseta">
+                CREATE TABLE `roseta` (
+                  `id` int(11) NOT NULL,
+                  `id_material_cableado` int(11) NOT NULL,
+                  `tipo_roseta` text NOT NULL,
+                  PRIMARY KEY (`id`),
+                  KEY `id_material_cableado` (`id_material_cableado`),
+                  CONSTRAINT `roseta_ibfk_1` FOREIGN KEY (`id_material_cableado`) REFERENCES `material_cableado` (`id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="servidor">
+                CREATE TABLE `servidor` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `id_equipo` int(11) NOT NULL,
+                  `funciones` text NOT NULL,
+                  `tipo_servidor` text NOT NULL,
+                  PRIMARY KEY (`id`),
+                  KEY `id_equipo` (`id_equipo`),
+                  CONSTRAINT `servidor_ibfk_1` FOREIGN KEY (`id_equipo`) REFERENCES `equipos` (`id`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="tomas">
+                CREATE TABLE `tomas` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `id_material_cableado` int(11) NOT NULL,
+                  `tipo_toma` text NOT NULL,
+                  `nombre_toma` varchar(30) NOT NULL,
+                  PRIMARY KEY (`id`),
+                  KEY `id_material_cableado` (`id_material_cableado`),
+                  CONSTRAINT `tomas_ibfk_1` FOREIGN KEY (`id_material_cableado`) REFERENCES `material_cableado` (`id`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="usuarios">
+                CREATE TABLE `usuarios` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `nº_usuario` varchar(30) NOT NULL,
+                  `nombre_usuario` text NOT NULL,
+                  `rol` text NOT NULL,
+                  `correo` int(11) NOT NULL,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+        </pma:database>
+    </pma:structure_schemas>
+
+    <!--
+    - Base de datos: 'universidad'
+    -->
+    <database name="universidad">
+        <!-- Tabla administradores -->
+        <table name="administradores">
+            <column name="id">1</column>
+            <column name="id_usuarios">2</column>
+            <column name="funciones">pepe</column>
+        </table>
+        <!-- Tabla alumnos -->
+        <table name="alumnos">
+            <column name="id">1</column>
+            <column name="id_usuarios">1</column>
+            <column name="np">154247</column>
+            <column name="nombre_alumno">saul</column>
+            <column name="apellidos">nebreda martinez</column>
+            <column name="correo_alumno">0</column>
+        </table>
+        <!-- Tabla canalizaciones -->
+        <table name="canalizaciones">
+            <column name="id">1</column>
+            <column name="id_material_cableado">1</column>
+            <column name="m2">50</column>
+        </table>
+        <!-- Tabla edificios -->
+        <table name="edificios">
+            <column name="id">1</column>
+            <column name="nombre_edificio">A</column>
+        </table>
+        <table name="edificios">
+            <column name="id">2</column>
+            <column name="nombre_edificio">B</column>
+        </table>
+        <table name="edificios">
+            <column name="id">3</column>
+            <column name="nombre_edificio">C</column>
+        </table>
+        <table name="edificios">
+            <column name="id">4</column>
+            <column name="nombre_edificio">D</column>
+        </table>
+        <table name="edificios">
+            <column name="id">5</column>
+            <column name="nombre_edificio">E</column>
+        </table>
+        <!-- Tabla equipos -->
+        <table name="equipos">
+            <column name="id">1</column>
+            <column name="id_planta">1</column>
+            <column name="id_redes">1</column>
+            <column name="tipo">pc</column>
+            <column name="ubicacion">aula 300</column>
+            <column name="modelo">FD20487</column>
+            <column name="so">windows 10</column>
+            <column name="marca">dell</column>
+            <column name="reserva">20</column>
+        </table>
+        <table name="equipos">
+            <column name="id">2</column>
+            <column name="id_planta">2</column>
+            <column name="id_redes">1</column>
+            <column name="tipo">impresora</column>
+            <column name="ubicacion">sala comun</column>
+            <column name="modelo">4100</column>
+            <column name="so">epson</column>
+            <column name="marca">epson</column>
+            <column name="reserva">10</column>
+        </table>
+        <table name="equipos">
+            <column name="id">3</column>
+            <column name="id_planta">3</column>
+            <column name="id_redes">2</column>
+            <column name="tipo">servidor</column>
+            <column name="ubicacion">sala especial</column>
+            <column name="modelo">JFL54385</column>
+            <column name="so">windows server 2016</column>
+            <column name="marca">dell</column>
+            <column name="reserva">2</column>
+        </table>
+        <table name="equipos">
+            <column name="id">4</column>
+            <column name="id_planta">3</column>
+            <column name="id_redes">2</column>
+            <column name="tipo">servidor</column>
+            <column name="ubicacion">sala especial</column>
+            <column name="modelo">JFL54386</column>
+            <column name="so">windows server 2016</column>
+            <column name="marca">dell</column>
+            <column name="reserva">2</column>
+        </table>
+        <!-- Tabla impresora -->
+        <table name="impresora">
+            <column name="id">1</column>
+            <column name="id_equipo">2</column>
+            <column name="tinta">epson BKMY</column>
+        </table>
+        <!-- Tabla material_cableado -->
+        <table name="material_cableado">
+            <column name="id">1</column>
+            <column name="ubicacion">almacen_cableado</column>
+            <column name="stock_disponible">50%</column>
+        </table>
+        <!-- Tabla pc -->
+        <table name="pc">
+            <column name="id">1</column>
+            <column name="id_equipo">1</column>
+            <column name="raton">dell</column>
+            <column name="teclado">dell</column>
+            <column name="tamaño">14</column>
+        </table>
+        <!-- Tabla plantas -->
+        <table name="plantas">
+            <column name="id">1</column>
+            <column name="id_edificio">1</column>
+            <column name="nº_planta">2</column>
+            <column name="nº_aula">202</column>
+            <column name="tamaño">30</column>
+        </table>
+        <table name="plantas">
+            <column name="id">2</column>
+            <column name="id_edificio">2</column>
+            <column name="nº_planta">1</column>
+            <column name="nº_aula">112</column>
+            <column name="tamaño">35</column>
+        </table>
+        <table name="plantas">
+            <column name="id">3</column>
+            <column name="id_edificio">1</column>
+            <column name="nº_planta">3</column>
+            <column name="nº_aula">320</column>
+            <column name="tamaño">27</column>
+        </table>
+        <table name="plantas">
+            <column name="id">4</column>
+            <column name="id_edificio">3</column>
+            <column name="nº_planta">3</column>
+            <column name="nº_aula">302</column>
+            <column name="tamaño">30</column>
+        </table>
+        <!-- Tabla plantas_material_cableado -->
+        <table name="plantas_material_cableado">
+            <column name="id">1</column>
+            <column name="id_planta">1</column>
+            <column name="id_material_cableado">1</column>
+        </table>
+        <!-- Tabla profesores -->
+        <table name="profesores">
+            <column name="id">1</column>
+            <column name="id_usuarios">3</column>
+            <column name="nº_alumno">3</column>
+            <column name="asignaturas">ASIR</column>
+        </table>
+        <!-- Tabla racks -->
+        <table name="racks">
+            <column name="id">1</column>
+            <column name="id_material_cableado">1</column>
+            <column name="tamaño_rack">24</column>
+            <column name="modelo">FD2345</column>
+            <column name="marca">OEM</column>
+        </table>
+        <!-- Tabla redes -->
+        <table name="redes">
+            <column name="id">1</column>
+            <column name="nombre_red">ASIR</column>
+            <column name="descripcion">alumnos de ASIR</column>
+        </table>
+        <table name="redes">
+            <column name="id">2</column>
+            <column name="nombre_red">DAM</column>
+            <column name="descripcion">alumnos de DAM</column>
+        </table>
+        <table name="redes">
+            <column name="id">3</column>
+            <column name="nombre_red">DAW</column>
+            <column name="descripcion">alumnos de DAW</column>
+        </table>
+        <!-- Tabla redes_usuarios -->
+        <table name="redes_usuarios">
+            <column name="id">1</column>
+            <column name="id_redes">1</column>
+            <column name="id_usuarios">1</column>
+        </table>
+        <table name="redes_usuarios">
+            <column name="id">3</column>
+            <column name="id_redes">2</column>
+            <column name="id_usuarios">3</column>
+        </table>
+        <table name="redes_usuarios">
+            <column name="id">2</column>
+            <column name="id_redes">3</column>
+            <column name="id_usuarios">2</column>
+        </table>
+        <!-- Tabla roseta -->
+        <table name="roseta">
+            <column name="id">1</column>
+            <column name="id_material_cableado">1</column>
+            <column name="tipo_roseta">RJ45</column>
+        </table>
+        <!-- Tabla servidor -->
+        <table name="servidor">
+            <column name="id">1</column>
+            <column name="id_equipo">3</column>
+            <column name="funciones">administrar el campus</column>
+            <column name="tipo_servidor">web</column>
+        </table>
+        <table name="servidor">
+            <column name="id">2</column>
+            <column name="id_equipo">4</column>
+            <column name="funciones">administra la red asignando ips</column>
+            <column name="tipo_servidor">dhcp</column>
+        </table>
+        <!-- Tabla tomas -->
+        <table name="tomas">
+            <column name="id">1</column>
+            <column name="id_material_cableado">1</column>
+            <column name="tipo_toma">RJ45</column>
+            <column name="nombre_toma">toma RJ45</column>
+        </table>
+        <!-- Tabla usuarios -->
+        <table name="usuarios">
+            <column name="id">1</column>
+            <column name="nº_usuario">1</column>
+            <column name="nombre_usuario">Saul</column>
+            <column name="rol">alumno</column>
+            <column name="correo">0</column>
+        </table>
+        <table name="usuarios">
+            <column name="id">2</column>
+            <column name="nº_usuario">2</column>
+            <column name="nombre_usuario">Pepe</column>
+            <column name="rol">administrador</column>
+            <column name="correo">0</column>
+        </table>
+        <table name="usuarios">
+            <column name="id">3</column>
+            <column name="nº_usuario">3</column>
+            <column name="nombre_usuario">Juan</column>
+            <column name="rol">profesor</column>
+            <column name="correo">0</column>
+        </table>
+    </database>
+</pma_xml_export>
