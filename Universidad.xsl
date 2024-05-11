@@ -126,7 +126,7 @@
             <th>equipo</th>
             <th>raton</th>
             <th>teclado</th>
-            <th>tamanio</th>
+            <th>tamaño</th>
           </tr>
         <xsl:for-each select="//table[@name='pc']">
           <tr>
@@ -134,7 +134,7 @@
             <td><xsl:value-of select="column[@name='id_equipo']"></xsl:value-of></td>
             <td><xsl:value-of select="column[@name='raton']"></xsl:value-of></td>
             <td><xsl:value-of select="column[@name='teclado']"></xsl:value-of></td>
-            <td><xsl:value-of select="column[@name='itamanio']"></xsl:value-of></td>
+            <td><xsl:value-of select="column[@name='tamaño']"></xsl:value-of></td>
           </tr>
         </xsl:for-each>
         </table>
