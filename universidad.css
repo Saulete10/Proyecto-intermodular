@@ -8,6 +8,10 @@ table {
     margin-right: auto;
 }
 
+tr,th {
+    text-align: center;
+}
+
 th {
     background-color: lightgreen;
 }
